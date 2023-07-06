@@ -22,13 +22,13 @@ public class Goal : MonoBehaviourPunCallbacks
         if (other.gameObject.CompareTag("Ball"))
         {
             audioS.PlayOneShot(win);
-            if (!photonView.IsMine)
+            /*if (!photonView.IsMine)
             {
                 return;
-            }
+            }*/
 
             score++;
-            scoreText.text = score.ToString();
+            //scoreText.text = score.ToString();
 
             Rigidbody ballRb = other.GetComponent<Rigidbody>();
             ballRb.velocity = Vector3.zero;
@@ -36,7 +36,7 @@ public class Goal : MonoBehaviourPunCallbacks
             other.gameObject.transform.position = spawnPoint.position;
 
             // Synchronize the score across all clients
-            photonView.RPC("UpdateScore", RpcTarget.AllBuffered, score);
+            //photonView.RPC("UpdateScore", RpcTarget.AllBuffered, score);
         }
     }
 

@@ -7,6 +7,10 @@ TagManager:
   - Ball
   - post
   - Player2
+  - A
+  - B
+  - C
+  - Post
   layers:
   - Default
   - TransparentFX
