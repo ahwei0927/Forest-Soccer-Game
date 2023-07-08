@@ -28,7 +28,7 @@ public class Goal : MonoBehaviourPunCallbacks
             }*/
 
             score++;
-            //scoreText.text = score.ToString();
+            UpdateScore(score);
 
             Rigidbody ballRb = other.GetComponent<Rigidbody>();
             ballRb.velocity = Vector3.zero;
@@ -41,7 +41,7 @@ public class Goal : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    private void UpdateScore(int newScore)
+    public void UpdateScore(int newScore)
     {
         score = newScore;
         scoreText.text = score.ToString();

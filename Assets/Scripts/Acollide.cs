@@ -7,7 +7,7 @@ public class Acollide : MonoBehaviour
     public GameObject ball;
     private bool isScaling = false; // Flag to track if scaling is in progress
     private float scalingDuration = 10f; // Duration of scaling process
-    private float scalingFactor = 2f; // Scaling factor for the ball
+    private float scalingFactor = 1.5f; // Scaling factor for the ball
 
     private void Awake()
     {
