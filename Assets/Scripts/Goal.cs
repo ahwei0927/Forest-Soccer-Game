@@ -21,22 +21,26 @@ public class Goal : MonoBehaviourPunCallbacks
     {
         if (other.gameObject.CompareTag("Ball"))
         {
-            audioS.PlayOneShot(win);
-            /*if (!photonView.IsMine)
+            Ball ball = other.gameObject.GetComponent<Ball>();
+            if (ball != null && !ball.getStickToPlayer())
             {
-                return;
-            }*/
+                audioS.PlayOneShot(win);
+                /*if (!photonView.IsMine)
+                {
+                    return;
+                }*/
 
-            score++;
-            UpdateScore(score);
+                score++;
+                UpdateScore(score);
 
-            Rigidbody ballRb = other.GetComponent<Rigidbody>();
-            ballRb.velocity = Vector3.zero;
-            ballRb.angularVelocity = Vector3.zero;
-            other.gameObject.transform.position = spawnPoint.position;
+                Rigidbody ballRb = other.GetComponent<Rigidbody>();
+                ballRb.velocity = Vector3.zero;
+                ballRb.angularVelocity = Vector3.zero;
+                other.gameObject.transform.position = spawnPoint.position;
 
-            // Synchronize the score across all clients
-            //photonView.RPC("UpdateScore", RpcTarget.AllBuffered, score);
+                // Synchronize the score across all clients
+                //photonView.RPC("UpdateScore", RpcTarget.AllBuffered, score);
+            }
         }
     }
 
