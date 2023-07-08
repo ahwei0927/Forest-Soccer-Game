@@ -24,6 +24,12 @@ EditorBuildSettings:
     path: Assets/Scenes/SingleSelect.unity
     guid: 99c9cab3152142740834f23ed56cfb89
   - enabled: 1
+    path: Assets/Scenes/Easy.unity
+    guid: c822e79409530774ea478cf20c0f841f
+  - enabled: 1
     path: Assets/Scenes/Medium.unity
     guid: 10734176255e89c40999e533e51ebe71
+  - enabled: 1
+    path: Assets/Scenes/Hard.unity
+    guid: 7a23a31cd3f872846b6cb0d8532f8cdd
   m_configObjects: {}
