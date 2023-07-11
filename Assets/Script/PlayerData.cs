@@ -8,7 +8,7 @@ using TMPro;
 public class PlayerData : MonoBehaviour
 {
     public APISystem api;
-    public TMP_InputField username;
+    public Text username;
 
     void Start()
     {

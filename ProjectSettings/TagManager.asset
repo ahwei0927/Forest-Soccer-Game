@@ -11,6 +11,8 @@ TagManager:
   - B
   - C
   - Post
+  - Bullet
+  - BallPo
   layers:
   - Default
   - TransparentFX

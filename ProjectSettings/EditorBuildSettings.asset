@@ -6,14 +6,14 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/let play.unity
+    guid: 7d5ec2dc9478405459cf8719bdd3f7ad
+  - enabled: 1
     path: Assets/Scenes/Login.unity
     guid: 14b388102545f244d8a6a50740713536
   - enabled: 1
     path: Assets/Scenes/Leaderboard.unity
     guid: ae0b7649d8390d5409ac8df714c83112
-  - enabled: 1
-    path: Assets/Scenes/GameMP.unity
-    guid: b32e5158ab9c1f040abfdde36bab3cba
   - enabled: 1
     path: Assets/Scenes/Lobby.unity
     guid: 7fa59dcd952bcc94288374c26807d29d
@@ -32,4 +32,14 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Hard.unity
     guid: 7a23a31cd3f872846b6cb0d8532f8cdd
-  m_configObjects: {}
+  - enabled: 1
+    path: Assets/Scenes/EasyMP.unity
+    guid: 9f15f3bdf0ba51a4e96dccd964705d1a
+  - enabled: 1
+    path: Assets/Scenes/MediumMP.unity
+    guid: e169c9712cfd49646ae74238c0c6d777
+  - enabled: 1
+    path: Assets/Scenes/HardMP.unity
+    guid: 3537ba5b8a0fe34428cdb86a2595368d
+  m_configObjects:
+    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: b3bffdf19749c6649b67448c65716583, type: 2}

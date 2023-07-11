@@ -10,27 +10,14 @@ public class GetBallMP : MonoBehaviourPunCallbacks
     public float force = 10f;
 
     private GameObject ball;
-    private Animator _animator;
     private PhotonView view;
 
+    private BallMP ballAttachedToPlayer;
     private void Start()
-    {
-        _animator = GetComponentInChildren<Animator>();
+    {      
         view = GetComponent<PhotonView>();
-
-        if (!view.IsMine)
-        {
-            _animator.enabled = false;
-        }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Ball") && view.IsMine)
-        {
-            ball = other.gameObject;
-            StartCoroutine(ReleaseBallCoroutine(transform.forward * force, Vector3.zero));
-        }
+        ball = GameObject.FindGameObjectWithTag("Ball");
+        ballAttachedToPlayer = ball.GetComponent<BallMP>();
     }
 
     private IEnumerator ReleaseBallCoroutine(Vector3 velocity, Vector3 networkVelocity)
@@ -48,25 +35,17 @@ public class GetBallMP : MonoBehaviourPunCallbacks
         if (!view.IsMine || ball == null)
             return;
 
-        if (view.IsMine && Input.GetButton("Fire2"))
+        if (view.IsMine && Input.GetButton("Fire2") && ballAttachedToPlayer.getStickToPlayer())
         {
-            _animator.SetBool("Kick", true);
-            StartCoroutine(ResetKickAnimation());
 
-            Rigidbody ballRigidbody = ball.GetComponent<Rigidbody>();
+            ballAttachedToPlayer.setStickToPlayer(false);
+            Rigidbody ballRigidbody = ballAttachedToPlayer.transform.gameObject.GetComponent<Rigidbody>();
             Vector3 shootDirection = transform.forward;
 
             ballRigidbody.AddForce(shootDirection * force, ForceMode.Impulse);
 
             view.RPC("ReleaseBall", RpcTarget.AllBuffered, shootDirection * force, ballRigidbody.velocity);
         }
-    }
-
-    private IEnumerator ResetKickAnimation()
-    {
-        yield return new WaitForSeconds(0.5f);
-
-        _animator.SetBool("Kick", false);
     }
 
     [PunRPC]

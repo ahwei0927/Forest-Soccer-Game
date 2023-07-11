@@ -14,6 +14,7 @@ public class PlayerMovementMP : MonoBehaviour
 
     [SerializeField]
     private float _rotationSpeed = 10f;
+    private float _rotationX;
 
     private Vector3 _playerVelocity;
     private bool _groundedPlayer;
@@ -21,16 +22,23 @@ public class PlayerMovementMP : MonoBehaviour
     [SerializeField]
     private float _gravityValue = -9.81f;
 
+    [SerializeField]
+    private Camera _followCamera;
+
     private void Start()
     {
         view = GetComponent<PhotonView>();
         _controller = GetComponent<CharacterController>();
         _animator = GetComponentInChildren<Animator>();
+        if (!view.IsMine)
+        {
+            Destroy(_followCamera);
+        }
     }
 
     private void Update()
     {
-        if(view.IsMine)
+        if (view.IsMine)
         {
             _groundedPlayer = _controller.isGrounded;
             if (_groundedPlayer && _playerVelocity.y < 0)
@@ -41,10 +49,15 @@ public class PlayerMovementMP : MonoBehaviour
             float horizontalInput = Input.GetAxis("Horizontal");
             float verticalInput = Input.GetAxis("Vertical");
 
-            Vector3 movementInput = new Vector3(-verticalInput, 0, horizontalInput);
+            Vector3 movementInput = Quaternion.Euler(0, transform.eulerAngles.y, 0) * new Vector3(horizontalInput, 0, verticalInput);
             Vector3 movementDirection = movementInput.normalized;
 
             _controller.Move(movementDirection * _playerSpeed * Time.deltaTime);
+
+            // Rotate view through mouse movement
+            float mouseX = Input.GetAxis("Mouse X") * 0.5f;
+            _rotationX += mouseX;
+            transform.Rotate(Vector3.up, _rotationX * _rotationSpeed * Time.deltaTime);
 
             if (movementDirection != Vector3.zero)
             {
@@ -55,23 +68,14 @@ public class PlayerMovementMP : MonoBehaviour
             }
             else if (Input.GetAxis("Horizontal") == 0)
             {
-                //Debug.Log("not pressing" + movementDirection);
                 _animator.SetBool("Walk", false);
             }
 
             _playerVelocity.y += _gravityValue * Time.deltaTime;
             _controller.Move(_playerVelocity * Time.deltaTime);
 
-            if (Input.GetMouseButtonDown(0))
-            {
-                _animator.SetBool("Jump", true);
-            }
-            else
-            {
-                _animator.SetBool("Jump", false);
-            }
         }
-        
     }
+
 
 }

@@ -9,6 +9,7 @@ public class BCollide : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
+
             Goal goalScript = FindObjectOfType<Goal>();
             if (goalScript != null)
             {

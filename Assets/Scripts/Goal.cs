@@ -25,10 +25,10 @@ public class Goal : MonoBehaviourPunCallbacks
             if (ball != null && !ball.getStickToPlayer())
             {
                 audioS.PlayOneShot(win);
-                /*if (!photonView.IsMine)
+                if (!photonView.IsMine)
                 {
                     return;
-                }*/
+                }
 
                 score++;
                 UpdateScore(score);
@@ -38,8 +38,8 @@ public class Goal : MonoBehaviourPunCallbacks
                 ballRb.angularVelocity = Vector3.zero;
                 other.gameObject.transform.position = spawnPoint.position;
 
-                // Synchronize the score across all clients
-                //photonView.RPC("UpdateScore", RpcTarget.AllBuffered, score);
+                //Synchronize the score across all clients
+                photonView.RPC("UpdateScore", RpcTarget.AllBuffered, score);
             }
         }
     }

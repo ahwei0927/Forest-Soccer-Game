@@ -22,6 +22,22 @@ public class MoveAroundObject : MonoBehaviour
 
     private void Start()
     {
+        // Find the MainCamera object with the "MainCamera" tag
+        GameObject mainCameraObj = GameObject.FindWithTag("MainCamera");
+
+        if (mainCameraObj != null)
+        {
+            // Get the Transform component of the MainCamera object
+            _target = mainCameraObj.transform;
+
+            // Use the mainCameraTransform as needed
+            // For example, you can access its position, rotation, or other properties
+            Debug.Log("MainCamera position: " + _target.position);
+        }
+        else
+        {
+            Debug.LogError("MainCamera object not found!");
+        }
         // Set initial rotation to the rotation in the inspector
         _currentRotation = transform.rotation.eulerAngles;
 
@@ -53,7 +69,7 @@ public class MoveAroundObject : MonoBehaviour
             desiredDistance = Mathf.Max(distance, _initialDistance);
         }
 
-        // Move the camera
         transform.position = _target.position - transform.forward * desiredDistance;
+        
     }
 }
