@@ -31,7 +31,7 @@ public class Goal : MonoBehaviourPunCallbacks
                 other.gameObject.transform.position = spawnPoint.position;
 
                 //Synchronize the score across all clients
-                photonView.RPC("UpdateScore", RpcTarget.AllBuffered, score);
+                //photonView.RPC("UpdateScore", RpcTarget.AllBuffered, score);
             }
         }
     }

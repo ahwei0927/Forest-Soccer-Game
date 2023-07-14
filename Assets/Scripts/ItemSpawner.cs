@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Photon.Pun;
 
-public class ItemSpawner : MonoBehaviourPunCallbacks
+public class ItemSpawner : MonoBehaviour
 {
     public GameObject[] itemPrefabs;
     public Transform[] spawnArea;
@@ -22,11 +21,7 @@ public class ItemSpawner : MonoBehaviourPunCallbacks
     private void Start()
     {
         InitializeSpawnPositions();
-
-        if (PhotonNetwork.IsMasterClient)
-        {
-            StartCoroutine(StartSpawnItemsWithDelay());
-        }
+        StartCoroutine(StartSpawnItemsWithDelay());
     }
 
     private void InitializeSpawnPositions()
@@ -40,12 +35,10 @@ public class ItemSpawner : MonoBehaviourPunCallbacks
     private IEnumerator StartSpawnItemsWithDelay()
     {
         yield return new WaitForSeconds(startDelay);
-
-        photonView.RPC("SpawnItemsWithDelayRPC", RpcTarget.All);
+        StartCoroutine(SpawnItemsWithDelay());
     }
 
-    [PunRPC]
-    private IEnumerator SpawnItemsWithDelayRPC()
+    private IEnumerator SpawnItemsWithDelay()
     {
         for (int i = 0; i < numberOfItems; i++)
         {
@@ -59,20 +52,13 @@ public class ItemSpawner : MonoBehaviourPunCallbacks
             Transform spawnPosition = spawnPositions[randomIndex];
             spawnPositions.RemoveAt(randomIndex);
 
-            GameObject spawnedItem = PhotonNetwork.Instantiate(itemPrefabs[Random.Range(0, itemPrefabs.Length)].name, spawnPosition.position, Quaternion.identity);
+            GameObject spawnedItem = Instantiate(itemPrefabs[Random.Range(0, itemPrefabs.Length)], spawnPosition.position, Quaternion.identity);
             spawnedItems.Add(spawnedItem);
             audioS.PlayOneShot(spawnSound);
 
-            photonView.RPC("DestroySpawnedItemRPC", RpcTarget.All, spawnedItem.GetPhotonView().ViewID);
+            Destroy(spawnedItem, itemLifetime);
 
             yield return new WaitForSeconds(Random.Range(minSpawnDelay, maxSpawnDelay));
         }
-    }
-
-    [PunRPC]
-    private void DestroySpawnedItemRPC(int viewID)
-    {
-        GameObject item = PhotonView.Find(viewID).gameObject;
-        Destroy(item, itemLifetime);
     }
 }

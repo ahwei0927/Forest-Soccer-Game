@@ -11,14 +11,11 @@ public class BallMP : MonoBehaviour
 
     float speed;
     Vector3 previousLocation;
-    GetBallMP playerBall;
+
     PhotonView view;
 
     private void Start()
     {
-        
-
-        playerBall = transformPlayer.GetComponent<GetBallMP>();
         view = GetComponent<PhotonView>();
 
         
