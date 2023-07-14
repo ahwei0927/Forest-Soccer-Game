@@ -10,12 +10,7 @@ public class Goal : MonoBehaviourPunCallbacks
     public AudioClip win;
 
     public int score = 0;
-    private PhotonView photonView;
 
-    private void Start()
-    {
-        photonView = GetComponent<PhotonView>();
-    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -25,10 +20,7 @@ public class Goal : MonoBehaviourPunCallbacks
             if (ball != null && !ball.getStickToPlayer())
             {
                 audioS.PlayOneShot(win);
-                if (!photonView.IsMine)
-                {
-                    return;
-                }
+                
 
                 score++;
                 UpdateScore(score);
